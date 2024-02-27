@@ -1,0 +1,1 @@
+export const URL_Server = "http://localhost:5000";
