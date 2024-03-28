@@ -17,5 +17,6 @@ router.route('/profile')
     .get(protect, getUserProfile)
     .put(protect, updateUserProfile);
 router.get('/companyList', getAllCompany);
+
 router.get('/:id',getCompanyItem);
 export default router;

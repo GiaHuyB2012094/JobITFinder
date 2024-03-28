@@ -11,6 +11,7 @@ import skillOfCompanyRoutes from "./routes/skillOfCompanyRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoute.js";
 import applyRoutes from "./routes/applyRoutes.js"
+import saveRoutes from "./routes/savedRoutes.js";
 // connect mongoDB ---------------------------------------------------------
 import connectDB from "./config/db.js";
 
@@ -30,6 +31,7 @@ app.use("/api/skillofcompany", skillOfCompanyRoutes);
 app.use("/api/industryofcompany", industryOfCompanyRoutes);
 app.use("/api/jobPost", postRoutes);
 app.use("/api/apply", applyRoutes);
+app.use("/api/saved", saveRoutes);
 
 app.get("/", (req, res) => res.send("Server is ready"));
 

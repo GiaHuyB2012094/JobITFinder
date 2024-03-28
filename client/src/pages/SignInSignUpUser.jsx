@@ -13,6 +13,7 @@ import Loader from "../components/Loader";
 import logo from "../assets/JOBITFINDER.png"
 import imgVacancy from "../assets/5372072-removebg.png"
 import { avatarComp } from "../constants";
+
 const SignInSignUpUser = () => {
     const [isRegister, setIsRegister] = useState(false);
 
@@ -46,17 +47,20 @@ const SignInSignUpUser = () => {
            const {email,password} = data;
            try {
                 const res = await login({email, password}).unwrap()
-                console.log(res);
-                if (res?.position === "user" || res?.position === "admin"){
+
+                if (res?.position === "user"){
                     dispatch(setCredentials({...res}))
-                    toast.success("Login successfully");
+
+                    toast.success("Đăng nhập thành công");
+
                     if (userInfo?.position === "admin") {
                         navigate('/admin');
                     } else {
                         navigate('/')
                     }
+
                 } else if (res?.position === "company") {
-                    toast.error("It is account company");
+                    toast.error("Đây là tài khoản công ty");
                 }
            } catch (error) {
             toast.error(error?.data?.message || error.error)
@@ -66,7 +70,7 @@ const SignInSignUpUser = () => {
             try {
                 await registerU({email,password,firstName,lastName, position: "user"}).unwrap();
                 // dispatch(setCredentials({...res}));
-                toast.success("Sign up successfully");
+                toast.success("Đăng ký thành công");
                 setIsRegister(false);
             } catch (error) {
                 toast.error(error?.data?.message || error.error)

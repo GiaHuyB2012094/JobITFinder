@@ -3,7 +3,6 @@ import Nav from "./Nav";
 import InputControl from "./InputControl";
 import Image from "./Image";
 import Button from "./Button";
-import SearchBar from "./SearchBar";
 import CartGroup from "./CartGroup";
 import CartCompanySquare from "./company/CartCompanySquare";
 import SlideBar from "./slideBar";
@@ -14,21 +13,23 @@ import Description from "./Description";
 import CartJobPost from "./CartJobPost";
 import FormApply from "./FormApply";
 import CartSquare from "./CartSquare";
+import ShowImages from "./ShowImages";
+
 export {
-    Footer,
-    Nav,
-    InputControl,
-    Image,
-    Button,
-    SlideBar,
-    SearchBar,
-    CartGroup,
-    CartCompanySquare,
-    FormPostJob,
-    TableJobs,
-    TableSelect,
-    Description,
-    CartJobPost,
-    FormApply,
-    CartSquare,
-}
+  Footer,
+  Nav,
+  InputControl,
+  Image,
+  Button,
+  SlideBar,
+  CartGroup,
+  CartCompanySquare,
+  FormPostJob,
+  TableJobs,
+  TableSelect,
+  Description,
+  CartJobPost,
+  FormApply,
+  CartSquare,
+  ShowImages,
+};

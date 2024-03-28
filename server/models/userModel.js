@@ -1,83 +1,95 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 const { Schema } = mongoose;
 
-
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     lastName: {
-        type : String,
+      type: String,
     },
     firstName: {
-        type : String,
+      type: String,
     },
     email: {
-        type : String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type : String,
-        required: true
+      type: String,
+      required: true,
     },
     position: {
-        type: String,
-        required: true,
-        default: "user",
+      type: String,
+      required: true,
+      default: "user",
     },
     avatar: {
-        type: String,
+      type: String,
     },
     coverImg: {
-        type: String, 
+      type: String,
     },
     address: {
-        type: String,
+      type: String,
     },
     addressDetail: {
-        type: [String],
+      type: [String],
     },
     phone: {
-        type: String,
-    }, 
+      type: String,
+    },
     date: {
-        type: Date,
+      type: Date,
     },
     // company
     nameCompany: {
-        type: String,
+      type: String,
     },
     website: {
-        type: String,
+      type: String,
     },
-    industryCompany:  {
-        type:  [String],
+    industryCompany: {
+      type: [String],
     },
-    skillOfCompany:  {
-        type:  [String],
+    skillOfCompany: {
+      type: [String],
     },
     infoOfCompany: {
-        type: String,
+      type: String,
     },
     sizeCompany: {
-        type: Number,
+      type: Number,
     },
     nationality: {
-        type: String,
+      type: String,
     },
-}, {
-    timestamps: true
+    benefits: {
+      type: [String],
+    },
+    imagesCompany: {
+      type: [String],
+    },
+    saved: {
+      type: Number,
+      default: 0,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) next();
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) next();
-
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password,salt);
-})
-
 userSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
-}
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;
