@@ -43,12 +43,12 @@ const SlideBar = memo(() => {
     }
   };
   return (
-    <main className="h-full my-0 py-3 px-3 bg-white w-1/5 shadow-lg border-2 border-solid border-gray-100">
+    <main className="h-full my-0 py-3 px-3 bg-white w-1/5  border-r border-solid border-gray-100">
       <div className="w-full flex items-center justify-between gap-3 border-b-2 border-solid border-gray-200 pb-4">
         <div className="">
           <Image
             src={userInfo?.avatar || urlAvatarDefault}
-            alt="okookok"
+            alt="avatar"
             className="w-24 "
           />
         </div>

@@ -19,6 +19,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { formatDateYYYYMMDD } from "../../constants/convertData";
 import DOMPurify from "dompurify";
 import { useUpdatePostMutation } from "../../slices/postApiSlice";
+import { BsFire } from "react-icons/bs";
 
 const tagRender = (props) => {
   const { label, value, closable, onClose } = props;
@@ -54,6 +55,11 @@ const FormJobUpdate = memo(({ open, onClose, width, title, val }) => {
   const [locations, setLocations] = useState(val.locations || [""]);
   const [minSalary, setMinSalary] = useState(val.minSalary || 100000);
   const [maxSalary, setMaxSalary] = useState(val.maxSalary || 100000);
+
+  const [isUrgentRecruitment, setIsUrgentRecruitment] = useState(
+    val.urgentRecruitment
+  );
+  console.log(val.urgentRecruitment);
   const [interviewProcess, setInterviewProcess] = useState(
     val.interviewProcess || [""]
   );
@@ -105,6 +111,7 @@ const FormJobUpdate = memo(({ open, onClose, width, title, val }) => {
       desc: convertedContent,
       minSalary: minSalary,
       maxSalary: maxSalary,
+      urgentRecruitment: isUrgentRecruitment,
     });
     try {
       await updatePost({
@@ -744,6 +751,33 @@ const FormJobUpdate = memo(({ open, onClose, width, title, val }) => {
               // error={errors.deadlineSubmit ? errors.deadlineSubmit.message : ""}
             />
           </div>
+        </div>
+
+        {/* urgent recruitment */}
+        <div
+          className={`my-3 flex gap-x-3 border-t pt-2  p-3 ${
+            isUrgentRecruitment ? "bg-indigo-200" : "bg-emerald-300"
+          }`}
+        >
+          <input
+            type="checkbox"
+            name="isUrgentRecruitment"
+            value={isUrgentRecruitment}
+            checked={isUrgentRecruitment}
+            onChange={(e) => {
+              setIsUrgentRecruitment(e.target.checked);
+            }}
+            className="w-4 "
+          />
+          <label
+            htmlFor="isUrgentRecruitment"
+            className="flex items-center gap-x-2"
+          >
+            Cần Tuyển Dụng Gấp{" "}
+            <span className="font-bold text-red-500">
+              <BsFire />
+            </span>
+          </label>
         </div>
       </form>
     </Drawer>

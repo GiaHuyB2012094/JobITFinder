@@ -3,6 +3,7 @@ import {
   CartSquare,
   Description,
   Footer,
+  Image,
   Nav,
   TableSelect,
 } from "../components";
@@ -13,6 +14,7 @@ import { convertDateFormat } from "../constants/convertData";
 import { useGetCompanyItemQuery } from "../slices/usersApiSlice";
 import { CardHorizontalSkeleton } from "../components/Shared/Skeleton";
 import { CartCompanySquare, CompanyCart } from "../components/company";
+import emptyDate from "../assets/emptyData.jpg";
 
 const TableIntro = () => {
   const colorStatus = {
@@ -289,9 +291,15 @@ const AppliesUser = () => {
         {/* header */}
         <p className="text-lg text-indigo-600 font-medium uppercase mt-0 mb-4 ">
           Các công việc đã được lên lịch phỏng vấn
-          <span className="mx-3 px-3 py-2 bg-indigo-100 text-lg font-medium border-2 border-solid border-indigo-300">
-            {dataApply?.length > 0 && dataApply.length}
-          </span>
+          {dataApply?.length > 0 ? (
+            <span className="mx-3 px-3 py-2 bg-indigo-100 text-lg font-medium border-2 border-solid border-indigo-300">
+              {dataApply.length}
+            </span>
+          ) : (
+            <span className="mx-3 px-3 py-2 lowercase bg-indigo-100 text-lg font-medium border-2 border-solid border-indigo-300">
+              Chưa có
+            </span>
+          )}
         </p>
 
         {/* body */}
@@ -309,29 +317,37 @@ const AppliesUser = () => {
 
             <div className="">
               <div className=" space-y-4">
-                {dataApply?.map((item, idx) => (
-                  <div key={idx}>
-                    <CartSquare
-                      idCompany={item.companyID}
-                      idPost={item.post._id}
-                      name={item.post.name}
-                      to={item.post.deadline}
-                      from={item.post.createdAt}
-                      skills={item.post.skills}
-                      salary={item.post.maxSalary}
-                      status={item.status}
-                      interviewSchedule={item.interviewSchedule}
-                      modals
-                      dataModal={
-                        <Description
-                          items={dataItemsDesc(item.post)}
-                          layout="horizontal"
-                          column={4}
-                        />
-                      }
-                    />
-                  </div>
-                ))}
+                {dataApply?.length > 0 ? (
+                  dataApply?.map((item, idx) => (
+                    <div key={idx}>
+                      <CartSquare
+                        idCompany={item.companyID}
+                        idPost={item.post._id}
+                        name={item.post.name}
+                        to={item.post.deadline}
+                        from={item.post.createdAt}
+                        skills={item.post.skills}
+                        salary={item.post.maxSalary}
+                        status={item.status}
+                        interviewSchedule={item.interviewSchedule}
+                        modals
+                        dataModal={
+                          <Description
+                            items={dataItemsDesc(item.post)}
+                            layout="horizontal"
+                            column={4}
+                          />
+                        }
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <Image
+                    src={emptyDate}
+                    alt="empty-jobs"
+                    className="w-96 mx-auto"
+                  />
+                )}
               </div>
             </div>
           </div>

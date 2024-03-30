@@ -21,6 +21,7 @@ import Swal from "sweetalert2";
 import { useCreateJobPostMutation } from "../slices/postApiSlice";
 import { convertData } from "../constants/convertData";
 import { useGetSkillsQuery } from "../slices/skillOfCompanyApiSlice";
+import { BsFire } from "react-icons/bs";
 
 const tagRender = (props) => {
   const { label, value, closable, onClose } = props;
@@ -62,6 +63,7 @@ const FormPostJob = () => {
   const [maxSalary, setMaxSalary] = useState(100000);
   const [interviewProcess, setInterviewProcess] = useState([""]);
   const [isSubmitSuccessful, setIsSubmitSucessful] = useState(false);
+  const [isUrgentRecruitment, setIsUrgentRecruitment] = useState(false);
   // const dateNow = new Date();
   const [deadlineSubmit, setDeadlineSubmit] = useState("");
 
@@ -106,6 +108,7 @@ const FormPostJob = () => {
       desc: convertedContent,
       minSalary: minSalary,
       maxSalary: maxSalary,
+      urgentRecruitment: isUrgentRecruitment,
     });
     try {
       await createJobPost(data).unwrap();
@@ -124,7 +127,7 @@ const FormPostJob = () => {
       // toast.error(error?.data?.message || error.error)
     }
   };
-
+  console.log(isUrgentRecruitment);
   //  request
   const handleRequestUpdate = (e, idx) => {
     e.preventDefault();
@@ -249,6 +252,7 @@ const FormPostJob = () => {
       setSkills([]);
       setTypeJob([]);
       setConvertedContent(null);
+      setIsUrgentRecruitment(false);
     }
   }, [isSubmitSuccessful, reset]);
   return (
@@ -700,12 +704,35 @@ const FormPostJob = () => {
                 setDeadlineSubmit(e.target.value);
               }}
               styles=" !focus:outline-none !rounded-md mb-4"
-              // {...register("deadlineSubmit",{
-              //   required: "Vui lòng chọn hạn nộp cuối cùng"
-              // })}
-              // error={errors.deadlineSubmit ? errors.deadlineSubmit.message : ""}
             />
           </div>
+        </div>
+
+        {/* urgent recruitment */}
+        <div
+          className={`my-3 flex gap-x-3 border-t pt-2  p-3 ${
+            isUrgentRecruitment ? "bg-indigo-200" : "bg-emerald-300"
+          }`}
+        >
+          <input
+            type="checkbox"
+            name="isUrgentRecruitment"
+            value={isUrgentRecruitment}
+            checked={isUrgentRecruitment}
+            onChange={(e) => {
+              setIsUrgentRecruitment(e.target.checked);
+            }}
+            className="w-4 "
+          />
+          <label
+            htmlFor="isUrgentRecruitment"
+            className="flex items-center gap-x-2"
+          >
+            Cần Tuyển Dụng Gấp{" "}
+            <span className="font-bold text-red-500">
+              <BsFire />
+            </span>
+          </label>
         </div>
       </form>
 

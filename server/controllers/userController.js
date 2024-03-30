@@ -172,6 +172,16 @@ const getCompanyItem = asyncHandler(async (req, res) => {
   return res.status(200).json(companyExit);
 });
 
+// route GET /api/users/user/:id
+const getUserItem = asyncHandler(async (req, res) => {
+  const userExit = await User.findById(req.params.id);
+  if (!userExit || userExit.position !== "user") {
+    res.status(404);
+    throw new Error("Not Found User");
+  }
+  return res.status(200).json(userExit);
+});
+
 const getAllCompany = asyncHandler(async (req, res) => {
   const companyList = await User.find({ position: "company" });
   if (companyList) {
@@ -268,4 +278,5 @@ export {
   updateUserProfile,
   getAllCompany,
   getCompanyItem,
+  getUserItem,
 };

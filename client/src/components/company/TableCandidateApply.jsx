@@ -49,7 +49,8 @@ const TableCandidateApply = () => {
                   timeApply={apply?.createdAt}
                   post={apply?.post}
                   email={apply?.email}
-                  idApply={apply?._id}
+                  applyID={apply?._id}
+                  userID={apply?.userID}
                 />
               </div>
             ))
@@ -81,6 +82,7 @@ const TableCandidateApply = () => {
                       status={apply?.status}
                       timeApply={apply?.createdAt}
                       post={apply?.post}
+                      userID={apply?.userID}
                       email={apply?.email}
                     />
                   </div>
@@ -115,6 +117,7 @@ const TableCandidateApply = () => {
                       status={apply?.status}
                       timeApply={apply?.createdAt}
                       post={apply?.post}
+                      userID={apply?.userID}
                       email={apply?.email}
                     />
                   </div>
@@ -149,6 +152,7 @@ const TableCandidateApply = () => {
                       status={apply?.status}
                       timeApply={apply?.createdAt}
                       post={apply?.post}
+                      userID={apply?.userID}
                       email={apply?.email}
                     />
                   </div>

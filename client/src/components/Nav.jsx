@@ -31,7 +31,7 @@ const Nav = () => {
   const [logoutApiCall] = useLogoutMutation();
 
   // sdasd
-  let badgeCount = 1;
+  let badgeCount = 0;
   // ádasd
   const onClick = async ({ key }) => {
     if (key === "logout") {

@@ -135,8 +135,7 @@ function App() {
           <FaArrowTurnUp />
         </button>
       )}
-
-      <Chatbot />
+      {userInfo?.position === "user" && <Chatbot />}
     </main>
   );
 }

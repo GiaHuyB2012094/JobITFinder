@@ -16,7 +16,8 @@ import {
   useGetSaveQuery,
 } from "../slices/saveApiSlice";
 import { toast } from "react-toastify";
-
+import { BsFire } from "react-icons/bs";
+import { FaCheck } from "react-icons/fa";
 const CartJobPost = ({ post }) => {
   const [activeHeart, setActiveHeart] = useState(false);
   const nowDate = new Date();
@@ -72,12 +73,22 @@ const CartJobPost = ({ post }) => {
     toast.success("Lưu bài thành công");
   };
 
+  const appliedCheck = useMemo(() => {
+    return post.userIDList.some((id) => id === userInfo._id);
+  }, [post.userIDList, userInfo]);
   return (
     <div
       className="flex w-full min-h-40 gap-x-5 p-3 bg-white rounded-md shadow-md border-2 border-indigo-100
          hover:border-solid hover:border-2 hover:border-indigo-200"
     >
-      <div className="w-1/5 flex-center  p-5 border-2 border-dashed border-indigo-100 rounded-lg cursor-pointer">
+      <div
+        className={`w-1/5 flex-center  p-5 border-2 relative border-indigo-100 rounded-lg cursor-pointer *:
+        ${
+          post.urgentRecruitment
+            ? "border-solid border-orange-500 "
+            : "border-dashed"
+        }`}
+      >
         <Link to={`/job-detail/${post._id}/${dataCompanyItem?.nameCompany}`}>
           <Image
             src={dataCompanyItem?.avatar}
@@ -85,14 +96,20 @@ const CartJobPost = ({ post }) => {
             className="w-full h-fit"
           />
         </Link>
+
+        {post.urgentRecruitment && (
+          <div className="px-2 py-1 bg-red-100 absolute top-0 right-0  rounded-se-lg rounded-es-lg">
+            <p className="flex items-center gap-x-1 text-red-600 text-sm ">
+              <span>
+                <BsFire />
+              </span>
+              Tuyển gấp
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="w-[57%] h-full">
-        {post.quantity > 20 && (
-          <p className="rounded-full p-1 bg-green-100 w-36 text-center text-green-500 text-sm font-medium">
-            Tuyển số lượng lớn
-          </p>
-        )}
         <Link to={`/job-detail/${post._id}/${dataCompanyItem?.nameCompany}`}>
           <Tooltip placement="top" title={namePostTooltip}>
             <div className="w-96">
@@ -105,6 +122,7 @@ const CartJobPost = ({ post }) => {
             </div>
           </Tooltip>
         </Link>
+
         <p className="">{dataCompanyItem?.nameCompany}</p>
         <p className="text-[12px] font-semibold leading-[140%] text-gray-500">
           Đăng {multiFormatDateString(post?.createdAt)}
@@ -148,11 +166,20 @@ const CartJobPost = ({ post }) => {
         <div className="flex w-full gap-2">
           {userInfo ? (
             <>
-              <Button
-                title="Ứng tuyển"
-                styles="!w-24 !px-1"
-                to={`/job-detail/${post._id}/${dataCompanyItem?.nameCompany}`}
-              />
+              {!appliedCheck ? (
+                <Button
+                  title="Ứng tuyển"
+                  styles="!w-24 !px-1"
+                  to={`/job-detail/${post._id}/${dataCompanyItem?.nameCompany}`}
+                />
+              ) : (
+                <Button
+                  title="Đã ứng tuyển"
+                  styles="!w-40 !px-1 !text-sm !bg-slate-400 !font-normal"
+                  // iconLeft={<FaCheck />}
+                  to={`/job-detail/${post._id}/${dataCompanyItem?.nameCompany}`}
+                />
+              )}
               <Tooltip placement="top" title={saveTooltip}>
                 <span
                   className={`p-3 rounded-md bg-indigo-100 text-indigo-400 cursor-pointer border-2 border-solid border-indigo-100

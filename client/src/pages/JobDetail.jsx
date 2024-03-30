@@ -62,6 +62,7 @@ import satisfactionIcon from "../assets/Flaticons/satisfaction.png";
 import websiteIcon from "../assets/Flaticons/ux.png";
 import performanceIcon from "../assets/Flaticons/performance.png";
 import ContentSkeleton from "../components/Shared/Skeleton/ContentSkeleton";
+import { IoReloadSharp } from "react-icons/io5";
 import {
   CardCompanySkeleton,
   CardGroupSkeleton,
@@ -76,6 +77,7 @@ import {
   useGetSaveQuery,
 } from "../slices/saveApiSlice";
 import { toast } from "react-toastify";
+import { ApplySuggest } from "../components/ApplySuggest";
 
 const urlSalary =
   "https://static.vecteezy.com/system/resources/previews/004/691/569/non_2x/money-illustration-free-vector.jpg";
@@ -89,6 +91,7 @@ const JobDetail = () => {
   const [activeHeart, setActiveHeart] = useState(false);
   const [lengthDataJobsPost, setLengthDataJobsPost] = useState(5);
   const [openFormApply, setOpenFormApply] = useState(false);
+  const [openApplySuggest, setOpenApplySuggest] = useState(false);
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -153,9 +156,23 @@ const JobDetail = () => {
     toast.success("Lưu bài thành công");
   };
 
+  const jobsSuggest = useMemo(() => {
+    return dataJobsPost?.filter((job) => {
+      const check = job.skills.some((skill) =>
+        dataPost?.skills.includes(skill)
+      );
+      return check && job._id !== dataPost._id;
+    });
+  }, [dataPost, dataJobsPost]);
+
   useEffect(() => {
     setActiveHeart(!!savedPostRecord);
   }, [savedPostRecord]);
+
+  const appliedCheck = useMemo(() => {
+    return dataPost?.userIDList.some((id) => id === userInfo._id);
+  }, [dataPost?.userIDList, userInfo]);
+
   return (
     <main>
       <Nav />
@@ -239,13 +256,21 @@ const JobDetail = () => {
               </div>
               {/* apply */}
               <div className="w-full mt-5 flex-between">
-                <Button
-                  title="Ứng tuyển ngay"
-                  styles="w-9/12 py-3"
-                  iconLeft={<IoIosSend />}
-                  onClick={() => setOpenFormApply(true)}
-                />
-
+                {!appliedCheck ? (
+                  <Button
+                    title="Ứng tuyển ngay"
+                    styles="w-9/12 py-3"
+                    iconLeft={<IoIosSend />}
+                    onClick={() => setOpenFormApply(true)}
+                  />
+                ) : (
+                  <Button
+                    title="Ứng tuyển lại"
+                    styles="w-9/12 py-3 !bg-slate-500"
+                    iconLeft={<IoReloadSharp />}
+                    onClick={() => setOpenFormApply(true)}
+                  />
+                )}
                 {userInfo ? (
                   <span
                     className={`p-3 flex-center gap-2 rounded-md bg-indigo-100 text-indigo-400 cursor-pointer border-2 border-solid border-indigo-100
@@ -464,11 +489,20 @@ const JobDetail = () => {
                         đây.
                       </p>
                       <div className="flex gap-3">
-                        <Button
-                          title="Ứng tuyển ngay"
-                          styles="w-40"
-                          onClick={() => setOpenFormApply(true)}
-                        />
+                        {!appliedCheck ? (
+                          <Button
+                            title="Ứng tuyển ngay"
+                            styles="w-40"
+                            onClick={() => setOpenFormApply(true)}
+                          />
+                        ) : (
+                          <Button
+                            title="Ứng tuyển lại"
+                            styles="w-48 !bg-slate-500"
+                            iconLeft={<IoReloadSharp />}
+                            onClick={() => setOpenFormApply(true)}
+                          />
+                        )}
                         <Button
                           title="Lưu bài"
                           styles={`w-28  ${activeHeart ? "!bg-red-600" : ""}`}
@@ -807,6 +841,26 @@ const JobDetail = () => {
           companyID={dataCompany?._id}
           post={dataPost}
           modalClose={(data) => setOpenFormApply(data)}
+          appliedSuccess={(data) => setOpenApplySuggest(data)}
+        />
+      </Modal>
+      {/* apply suggest */}
+      <Modal
+        title={
+          <p className="text-lg capitalize pb-3 border-b text-center font-bold text-indigo-500">
+            Các công việc phù hợp với bạn
+          </p>
+        }
+        centered
+        open={openApplySuggest}
+        onCancel={() => setOpenApplySuggest(false)}
+        width={600}
+        okType="primary"
+        footer={null}
+      >
+        <ApplySuggest
+          dataJobSuggest={jobsSuggest}
+          onClose={(data) => setOpenApplySuggest(data)}
         />
       </Modal>
       <Footer />
