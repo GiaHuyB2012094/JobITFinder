@@ -3,10 +3,18 @@ import Apply from "../models/apply.js";
 import Post from "../models/post.js";
 // route POST /api/apply/
 const createApply = asyncHandler(async (req, res) => {
-  console.log(req.body);
-
-  const { name, email, phone, cv, intro, companyID, post, userID, status } =
-    req.body;
+  const {
+    name,
+    email,
+    phone,
+    cv,
+    intro,
+    companyID,
+    post,
+    userID,
+    status,
+    answerInterviewQuestion,
+  } = req.body;
 
   const applied = await Apply.findOne({
     name: name,
@@ -45,6 +53,7 @@ const createApply = asyncHandler(async (req, res) => {
     userID,
     status,
     interviewSchedule: {},
+    answerInterviewQuestion,
   });
   if (apply) {
     postExit.save();
@@ -127,7 +136,7 @@ const applyReject = asyncHandler(async (req, res) => {
 const applySchedule = asyncHandler(async (req, res) => {
   try {
     console.log(req.body);
-    console.log(req.params.id);
+    console.log(req.params);
 
     const applyUpdated = await Apply.findByIdAndUpdate(
       req.params.id,

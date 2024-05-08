@@ -183,11 +183,7 @@ const CartSquare = ({
           <div className="flex pb-2 border-b">
             <p className="text-sm">
               Sau khi xem xét kỹ thì xin chúc mừng bạn đã vượt qua vòng khảo sát
-              CV tiếp theo chúng tôi xin mời bạn{" "}
-              <span className=" font-semibold text-base">
-                {interviewSchedule?.name}
-              </span>{" "}
-              đến phỏng vấn vòng tiếp theo
+              CV tiếp theo chúng tôi xin mời bạn đến phỏng vấn vòng tiếp theo
             </p>
           </div>
 

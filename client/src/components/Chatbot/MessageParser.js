@@ -5,7 +5,7 @@ export default class MessageParser {
     }
   
     parse(message) {
-
+        // trim whitespace
         const lowerCaseMessage = (function greeting() {
             let messageTemp = message.toLowerCase();
             let wsRegex = /\s+/g
@@ -16,7 +16,7 @@ export default class MessageParser {
 
         // hello----------------------------------------------------------------------------
         if (lowerCaseMessage.includes("chào bạn") || 
-            lowerCaseMessage.includes("hi") ||
+            // lowerCaseMessage.includes("hi") ||
             lowerCaseMessage.includes("chào") ||
             lowerCaseMessage.includes("xin chào") ||
             lowerCaseMessage.includes("hello")
@@ -28,8 +28,8 @@ export default class MessageParser {
         if (lowerCaseMessage.includes("cảm ơn") 
             || lowerCaseMessage.includes("thanks")
             || lowerCaseMessage.includes("thank you")
-            || lowerCaseMessage.includes("ok")
-            || lowerCaseMessage.includes("oke")
+            // || lowerCaseMessage.includes("ok")
+            // || lowerCaseMessage.includes("oke")
         ) {
             return  this.actionProvider.handleThanks()
         }

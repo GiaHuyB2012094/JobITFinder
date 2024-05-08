@@ -248,13 +248,18 @@ const FormJobUpdate = memo(({ open, onClose, width, title, val }) => {
       }}
       extra={
         <Space>
-          <Button
+          <button
+            className="flex-center gap-2 py-2 px-4 font-semibold shadow-md rounded-lg bg-red-500   text-white w-full"
             onClick={onClose}
-            title="Hủy bỏ"
-            roundPrimary
-            styles="!border-red-500 !text-red-500"
-          />
-          <Button onClick={handleSubmit(onSubmit)} title="Cập nhật" />
+          >
+            Hủy bỏ
+          </button>
+          <button
+            className="flex-center gap-2 py-2 px-4 font-semibold shadow-md rounded-lg bg-indigo-500   text-white w-full"
+            onClick={handleSubmit(onSubmit)}
+          >
+            Cập nhật
+          </button>
         </Space>
       }
     >

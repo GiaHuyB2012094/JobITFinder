@@ -1,7 +1,7 @@
 import { Collapse, Popconfirm, Popover, Select, Tag, Tooltip } from "antd";
 import InputControl from "./InputControl";
 import { IoSearch } from "react-icons/io5";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { sortBy } from "../constants";
 
 import TableSelect from "./TableSelect";
@@ -23,14 +23,17 @@ import Image from "./Image";
 import { BsFire } from "react-icons/bs";
 
 const TableJobs = () => {
-  const [sortByJobs, setSortByJobs] = useState();
-  const { userInfo } = useSelector((state) => state.auth);
+  const [sortByJobs, setSortByJobs] = useState(sortBy[0]);
+  const [filterDataJobs, setFilterDataJobs] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeJob, setActiveJob] = useState("");
 
+  const { userInfo } = useSelector((state) => state.auth);
   const { data } = useGetPostItemWithCompanyQuery(userInfo._id, {
     refetchOnMountOrArgChange: true,
   });
+
   const onCloseDrawer = () => {
     setOpenDrawer(false);
   };
@@ -40,16 +43,16 @@ const TableJobs = () => {
       {
         title: "Tên",
         dataIndex: "name",
-        render: (_, data) => (
+        render: (_, filterDataJobs) => (
           <div className="w-72">
-            {data.locations[0] ? (
+            {filterDataJobs.locations[0] ? (
               <Collapse
                 items={[
                   {
-                    key: data.name,
+                    key: filterDataJobs.name,
                     label: (
                       <div className="flex items-center gap-x-1">
-                        {data.urgentRecruitment && (
+                        {filterDataJobs.urgentRecruitment && (
                           <Tooltip placement="top" title="Tuyển gấp">
                             <p className=" text-red-500">
                               <BsFire />
@@ -58,16 +61,18 @@ const TableJobs = () => {
                         )}
                         <p
                           className={`text-xm font-medium line-clamp-2 ${
-                            data.urgentRecruitment ? "text-orange-500" : ""
+                            filterDataJobs.urgentRecruitment
+                              ? "text-orange-500"
+                              : ""
                           } `}
                         >
-                          {data.name}
+                          {filterDataJobs.name}
                         </p>
                       </div>
                     ),
                     children: (
                       <ul>
-                        {data.locations.map((location, idx) => (
+                        {filterDataJobs.locations.map((location, idx) => (
                           <li className="text-slate-500 list-disc" key={idx}>
                             {location}
                           </li>
@@ -81,7 +86,9 @@ const TableJobs = () => {
               />
             ) : (
               <>
-                <p className="text-xm font-medium line-clamp-2">{data.name}</p>
+                <p className="text-xm font-medium line-clamp-2">
+                  {filterDataJobs.name}
+                </p>
               </>
             )}
           </div>
@@ -90,12 +97,12 @@ const TableJobs = () => {
       {
         title: "Ứng tuyển",
         dataIndex: "apply",
-        render: (_, data) => (
+        render: (_, filterDataJobs) => (
           <div>
             <p className="text-xm   w-24 mx-auto">
-              {data.apply === 0
+              {filterDataJobs.apply === 0
                 ? "Chưa có ứng viên"
-                : `${data.apply} Ứng viên(s)`}
+                : `${filterDataJobs.apply} Ứng viên(s)`}
             </p>
           </div>
         ),
@@ -103,15 +110,19 @@ const TableJobs = () => {
       {
         title: "Ngày tạo & Hạn nộp",
         dataIndex: "createdAndDeadline",
-        render: (_, data) => (
+        render: (_, filterDataJobs) => (
           <div className="w-44">
             <p className="   w-full mx-auto flex-between">
               Ngày tạo :
-              <span className=" ">{convertDateFormat(data.createdAt)}</span>
+              <span className=" ">
+                {convertDateFormat(filterDataJobs.createdAt)}
+              </span>
             </p>
             <p className="  w-full mx-auto flex-between">
               Ngày kết thúc :
-              <span className=" ">{convertDateFormat(data.deadline)}</span>
+              <span className=" ">
+                {convertDateFormat(filterDataJobs.deadline)}
+              </span>
             </p>
           </div>
         ),
@@ -119,19 +130,19 @@ const TableJobs = () => {
       {
         title: "Cần tuyển",
         dataIndex: "quantity",
-        render: (_, data) => (
+        render: (_, filterDataJobs) => (
           <div className="flex-center">
-            <p className="">{data.quantity}</p>
+            <p className="">{filterDataJobs.quantity}</p>
           </div>
         ),
       },
       {
         title: "Trạng thái",
         dataIndex: "status",
-        render: (_, data) => (
+        render: (_, filterDataJobs) => (
           <div className="px-2  border border-green-300 rounded bg-green-100">
             <p className=" text-green-600">
-              {data.status === "Successful" && "Thành công"}
+              {filterDataJobs.status === "Successful" && "Thành công"}
             </p>
           </div>
         ),
@@ -139,14 +150,14 @@ const TableJobs = () => {
       {
         title: "Thao tác",
         dataIndex: "action",
-        render: (_, data) => (
+        render: (_, filterDataJobs) => (
           <div className="flex-between gap-2">
             {/* see detail */}
             <Popover
               placement="left"
               content={
                 <Description
-                  items={dataItemsDesc(data)}
+                  items={dataItemsDesc(filterDataJobs)}
                   title="Thông tin bài tuyển dụng"
                   layout="horizontal"
                   column={4}
@@ -164,7 +175,7 @@ const TableJobs = () => {
               className="p-1 bg-blue-100 rounded-md cursor-pointer hover:bg-blue-300 hover:!text-white text-lg text-blue-500"
               onClick={() => {
                 setOpenDrawer(true);
-                setActiveJob(data);
+                setActiveJob(filterDataJobs);
               }}
             >
               <FaEdit />
@@ -178,7 +189,7 @@ const TableJobs = () => {
               description="Bạn có chắc chắn không?"
               icon={<QuestionCircleOutlined style={{ color: "red" }} />}
               onConfirm={() => {
-                handleDeleteJob(data._id);
+                handleDeleteJob(filterDataJobs._id);
               }}
             >
               <div className="p-1 bg-red-100 rounded-md cursor-pointer hover:bg-red-300 hover:!text-white text-lg text-red-500">
@@ -189,14 +200,14 @@ const TableJobs = () => {
         ),
       },
     ],
-    []
+    [filterDataJobs]
   );
 
   const [deletePost] = useDeletePostMutation();
+
   const handleDeleteJob = async (jobId) => {
     console.log(jobId);
     try {
-      console.log("koaskod");
       await deletePost(jobId);
       toast.success("Xóa bài tuyển dụng thành công");
     } catch (error) {
@@ -205,12 +216,21 @@ const TableJobs = () => {
   };
   // [convertDateFormat(item.createdAt),convertDateFormat(item.deadline)],
   const dataTable = useMemo(() => {
-    const result = data?.map((item, idx) => ({
-      key: idx,
-      ...item,
-    }));
+    let result;
+    if (filterDataJobs?.length > 0) {
+      result = filterDataJobs?.map((item, idx) => ({
+        key: idx,
+        ...item,
+      }));
+    } else {
+      result = data?.map((item, idx) => ({
+        key: idx,
+        ...item,
+      }));
+    }
+
     return result;
-  }, [data]);
+  }, [filterDataJobs, data]);
 
   const dataItemsDesc = function (dataI) {
     const result = [
@@ -384,25 +404,84 @@ const TableJobs = () => {
     ];
     return result;
   };
+
+  const handleTextSearch = () => {
+    const result = data.filter((jobI) => {
+      let name = jobI.name.toLowerCase();
+      return name.includes(searchText.toLowerCase());
+    });
+    setFilterDataJobs(result);
+    console.log(filterDataJobs, result);
+  };
+
+  useEffect(() => {
+    setFilterDataJobs(data);
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      let dataI = [...data];
+      switch (sortByJobs) {
+        case "all":
+          setFilterDataJobs(dataI);
+          break;
+
+        case "name":
+          dataI.sort((a, b) => {
+            const nameA = a.name.toUppercase;
+            const nameB = b.name.toUppercase;
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0;
+          });
+          setFilterDataJobs(dataI);
+          break;
+
+        case "newest":
+          dataI.sort((a, b) => a.createdAt - b.createdAt);
+          setFilterDataJobs(dataI);
+          break;
+
+        case "quantity":
+          dataI.sort((a, b) => a.quantity - b.quantity);
+          setFilterDataJobs(dataI);
+          break;
+
+        default:
+          setFilterDataJobs(dataI);
+          break;
+      }
+    }
+  }, [sortByJobs, data]);
   return (
     <main className="">
       {/* search */}
       <div className="flex-between">
-        <div className="flex-between p-2 my-4 mx-2 rounded-md bg-indigo-50">
-          <div className="text-xl  font-medium text-gray-500">
-            <IoSearch />
-          </div>
-          <InputControl
+        <div className="flex-between p-3 my-2 rounded-md bg-indigo-50">
+          <input
             type="text"
-            name="search"
-            styles=" !focus:outline-none !rounded-md py-0 !border-none w-48"
+            name="searchText"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
             placeholder="Tìm kiếm bài đăng..."
+            className="w-80 h-11 focus:outline-none border-none px-3 rounded-s shadow bg-white"
           />
+          <button
+            className="text-xl p-3 bg-slate-300   font-medium text-gray-500 rounded-e hover:bg-slate-400 hover:text-gray-600 shadow"
+            onClick={handleTextSearch}
+          >
+            <IoSearch />
+          </button>
         </div>
+
         <div className="flex-center gap-2">
           <div className="text-base font-normal text-gray-500 ">Sắp xếp :</div>
           <Select
-            placeholder="Chọn giới tính"
+            placeholder="Chọn lựa chọn"
             style={{
               width: "120px",
               height: "40px",
@@ -430,6 +509,7 @@ const TableJobs = () => {
             className="w-80 mx-auto"
           />
         )}
+
         {openDrawer && (
           <FormJobUpdate
             open={openDrawer}

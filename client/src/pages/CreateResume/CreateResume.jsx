@@ -63,7 +63,7 @@ const CreateResume = () => {
       <Nav />
       <section className="px-8 pt-20 flex flex-col items-center gap-8">
         <p className="font-bold text-3xl text-indigo-600 border-b pb-2 border-indigo-300">
-          Tạo Đơn Ứng Tuyển
+          Tạo Hồ Sơ Ứng Tuyển
         </p>
         <div className="w-full flex gap-10 justify-between items-center">
           <div className="flex gap-5 py-0 px-8">
@@ -81,7 +81,7 @@ const CreateResume = () => {
               ></span>
             ))}
           </div>
-
+          {/* print */}
           <ReactToPrint
             trigger={() => {
               return (

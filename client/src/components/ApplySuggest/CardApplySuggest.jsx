@@ -20,7 +20,7 @@ const CardApplySuggest = (props) => {
       className="flex-between text-sm pb-2 border-b w-full cursor-pointer"
     >
       <div className="">
-        <p className="font-medium w-80 truncate">{job.name}</p>
+        <p className="font-medium w-[500px] truncate">{job.name}</p>
         <p className="text-indigo-500 uppercase w-80 truncate">
           {dataCompany?.nameCompany}
         </p>

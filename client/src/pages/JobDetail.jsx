@@ -230,7 +230,11 @@ const JobDetail = () => {
                   </div>
                   <div className="flex flex-col gap-1">
                     <p className="">Kinh nghiệm</p>
-                    <p className="font-medium">{dataPost?.experience} năm</p>
+                    <p className="font-medium text-sm">
+                      {dataPost?.experience <= 0
+                        ? "Không yêu cầu"
+                        : `${dataPost?.experience} năm`}{" "}
+                    </p>
                   </div>
                 </div>
                 <div className="flex-center flex-1">
@@ -264,20 +268,23 @@ const JobDetail = () => {
                     onClick={() => setOpenFormApply(true)}
                   />
                 ) : (
-                  <Button
-                    title="Ứng tuyển lại"
-                    styles="w-9/12 py-3 !bg-slate-500"
-                    iconLeft={<IoReloadSharp />}
+                  <button
+                    className="w-3/4 py-3 bg-slate-300 rounded flex-center gap-x-3"
                     onClick={() => setOpenFormApply(true)}
-                  />
+                  >
+                    Ứng tuyển lại
+                    <span className="">
+                      <IoReloadSharp />
+                    </span>
+                  </button>
                 )}
                 {userInfo ? (
                   <span
-                    className={`p-3 flex-center gap-2 rounded-md bg-indigo-100 text-indigo-400 cursor-pointer border-2 border-solid border-indigo-100
+                    className={`p-3 flex-center gap-2 rounded-md  cursor-pointer border-2 border-solid 
                             active:translate-y-1 ${
                               activeHeart
                                 ? "!bg-red-100 !text-red-600 !border-red-200"
-                                : ""
+                                : "bg-indigo-100 text-indigo-400 border-indigo-100"
                             }`}
                     onClick={(e) => handleSavePost(e)}
                   >
@@ -287,11 +294,11 @@ const JobDetail = () => {
                 ) : (
                   <Popover content={contentHeart} trigger="hover">
                     <span
-                      className={`p-3 flex-center gap-2 rounded-md bg-indigo-100 text-indigo-400 cursor-pointer border-2 border-solid border-indigo-100
+                      className={`p-3 flex-center gap-2 rounded-md  cursor-pointer border-2 border-solid 
                                 active:translate-y-1 ${
                                   activeHeart
                                     ? "!bg-red-100 !text-red-600 !border-red-200"
-                                    : ""
+                                    : "bg-indigo-100 text-indigo-400 border-indigo-100"
                                 }`}
                       onClick={(e) => handleSavePost(e)}
                     >
@@ -679,7 +686,7 @@ const JobDetail = () => {
                       {dataPost?.interviewProcess?.map((item, idx) => (
                         <li key={idx}>
                           <span className="font-medium">
-                            &#10052; Vòng {idx} :
+                            &#10052; Vòng {idx + 1} :
                           </span>{" "}
                           {item}
                         </li>
@@ -854,7 +861,7 @@ const JobDetail = () => {
         centered
         open={openApplySuggest}
         onCancel={() => setOpenApplySuggest(false)}
-        width={600}
+        width={700}
         okType="primary"
         footer={null}
       >

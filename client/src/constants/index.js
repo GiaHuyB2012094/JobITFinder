@@ -125,31 +125,36 @@ export const itemSlideBar = [
     path: "/companies",
   },
   {
-    // icon: <ImProfile />,
     label: "Lịch hẹn",
     onClick: "",
     path: "/schedule-company",
   },
   {
-    // icon: <MdUpload />,
     label: "Đăng tuyển",
     onClick: "",
     path: "/post-job",
   },
   {
-    // icon: <FaListAlt/>,
     label: "Các bài tuyển dụng",
     onClick: "",
     path: "/my-jobs",
   },
   {
-    // icon: <FaUserTie/>,
     label: "Các đơn ứng tuyển",
     onClick: "",
     path: "/applied-company",
   },
   {
-    // icon: <IoLogOutSharp/>,
+    label: "Tạo bộ câu hỏi",
+    onClick: "",
+    path: "/interview-question",
+  },
+  {
+    label: "Áp dụng câu hỏi",
+    onClick: "",
+    path: "/apply-question-for-job",
+  },
+  {
     label: "Đăng xuất",
     key: "logout",
     onClick: "",
@@ -157,6 +162,10 @@ export const itemSlideBar = [
 ];
 
 export const sortBy = [
+  {
+    label: "Tất cả",
+    value: "all",
+  },
   {
     label: "Mới nhất",
     value: "newest",

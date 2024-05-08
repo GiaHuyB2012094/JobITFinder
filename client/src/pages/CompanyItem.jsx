@@ -120,7 +120,7 @@ const CompanyItem = () => {
               {/* general */}
               {isLoadingCompany ? (
                 <ContentSkeleton />
-              ) : (
+              ) : dataCompany?.infoOfCompany ? (
                 <div className="flex flex-col gap-4 bg-slate-100 my-2 px-5 py-2 rounded-lg ">
                   <p className="text-lg text-indigo-500 font-medium w-full border-b-2 border-solid border-indigo-200 py-1">
                     Giới thiệu công ty
@@ -129,7 +129,7 @@ const CompanyItem = () => {
                     {dataCompany?.infoOfCompany}
                   </p>
                 </div>
-              )}
+              ) : null}
 
               {/* images of company */}
               {isLoadingCompany ? (
@@ -147,12 +147,12 @@ const CompanyItem = () => {
               {/* benefits */}
               {isLoadingCompany ? (
                 <ContentSkeleton />
-              ) : (
-                <div className="flex flex-col gap-4 bg-slate-100 my-2 px-5 py-2 rounded-lg ">
+              ) : dataCompany?.benefits?.length > 0 ? (
+                <div className="space-y-1 bg-slate-100 my-2 px-5 py-2 rounded-lg ">
                   <p className="text-lg text-indigo-500 font-medium w-full border-b-2 border-solid border-indigo-200 py-1">
                     Phúc lợi
                   </p>
-                  <ul className="flex flex-wrap gap-1 w-full mx-4">
+                  <ul className="w-full mx-4 space-y-2">
                     {dataCompany?.benefits.map((benefit, idx) => (
                       <li
                         key={`${benefit}-${idx}`}
@@ -163,7 +163,7 @@ const CompanyItem = () => {
                     ))}
                   </ul>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 

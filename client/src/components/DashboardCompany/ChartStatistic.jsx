@@ -14,45 +14,75 @@ import { MdDashboard } from "react-icons/md";
 import dayjs from "dayjs";
 const datarr = [
   {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
+    name: "Tháng 1",
+    candidate: 4000,
+    post: 2400,
     amt: 2400,
   },
   {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
+    name: "Tháng 2",
+    candidate: 3000,
+    post: 1398,
     amt: 2210,
   },
   {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
+    name: "Tháng 3",
+    candidate: 2000,
+    post: 9800,
     amt: 2290,
   },
   {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
+    name: "Tháng 4",
+    candidate: 2780,
+    post: 3908,
     amt: 2000,
   },
   {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
+    name: "Tháng 5",
+    candidate: 1890,
+    post: 4800,
     amt: 2181,
   },
   {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
+    name: "Tháng 6",
+    candidate: 2390,
+    post: 3800,
     amt: 2500,
   },
   {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
+    name: "Tháng 7",
+    candidate: 3490,
+    post: 4300,
+    amt: 2100,
+  },
+  {
+    name: "Tháng 8",
+    candidate: 3490,
+    post: 4300,
+    amt: 2100,
+  },
+  {
+    name: "Tháng 9",
+    candidate: 3490,
+    post: 4300,
+    amt: 2100,
+  },
+  {
+    name: "Tháng 10",
+    candidate: 3490,
+    post: 4300,
+    amt: 2100,
+  },
+  {
+    name: "Tháng 11",
+    candidate: 3490,
+    post: 4300,
+    amt: 2100,
+  },
+  {
+    name: "Tháng 12",
+    candidate: 3490,
+    post: 4300,
     amt: 2100,
   },
 ];
@@ -85,12 +115,12 @@ const ChartStatistic = () => {
           <Tooltip />
           <Legend />
           <Bar
-            dataKey="pv"
+            dataKey="post"
             fill="#8884d8"
             activeBar={<Rectangle fill="pink" stroke="blue" />}
           />
           <Bar
-            dataKey="uv"
+            dataKey="candidate"
             fill="#82ca9d"
             activeBar={<Rectangle fill="gold" stroke="purple" />}
           />

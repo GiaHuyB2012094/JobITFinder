@@ -26,7 +26,7 @@ const FastSearch = () => {
           <p className="z-10 group-hover:text-black">Frontend Developer</p>
           <img
             src={fe}
-            className="hidden z-0 absolute top-0 bottom-0 right-0 left-0 h-full group-hover:block opacity-80 "
+            className="hidden object-cover z-0 absolute top-0 bottom-0 right-0 left-0 h-full group-hover:block opacity-80 "
           />
         </Link>
 

@@ -14,7 +14,7 @@ import CompanyItem from "./CompanyItem";
 import SavePost from "./SavePost";
 import GrossNet from "./GrossNet";
 import CompanyTop from "./CompanyTop";
-
+import InterviewQuestion from "./InterviewQuestion";
 export {
   Admin,
   Company,
@@ -32,4 +32,5 @@ export {
   SavePost,
   GrossNet,
   CompanyTop,
+  InterviewQuestion,
 };

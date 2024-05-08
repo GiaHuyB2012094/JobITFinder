@@ -63,6 +63,33 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Users"],
     }),
+
+    createQuestions: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${USERS_URL}/add-questions-company/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Users"],
+    }),
+
+    updateQuestion: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${USERS_URL}/update-questions-company/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      providesTags: ["Users"],
+    }),
+
+    deleteQuestion: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${USERS_URL}/delete-question-company/${id}`,
+        method: "DELETE",
+        body: data,
+      }),
+      providesTags: ["Users"],
+    }),
   }),
 });
 
@@ -74,4 +101,7 @@ export const {
   useGetCompanyListQuery,
   useGetCompanyItemQuery,
   useGetUserItemQuery,
+  useCreateQuestionsMutation,
+  useUpdateQuestionMutation,
+  useDeleteQuestionMutation,
 } = usersApiSlice;

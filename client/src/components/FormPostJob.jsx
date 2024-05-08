@@ -621,6 +621,7 @@ const FormPostJob = () => {
                 <IoMdAdd className="w-5 h-5" />
               </button>
             </div>
+
             <div className="flex flex-col gap-3 overflow-y-scroll no-scrollbar max-h-[400px]">
               {locations?.map((item, idx) => (
                 <div className="flex-center " key={idx}>

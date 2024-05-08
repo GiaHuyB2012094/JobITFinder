@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { setSearchResult } from "../../slices/searchSlice";
 import { useGetPostsQuery } from "../../slices/postApiSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const tagRender = (props) => {
   const { label, value, closable, onClose } = props;
@@ -73,20 +74,22 @@ const SearchBar = () => {
   };
 
   const handleFilter = () => {
-    const result = Object.assign(
-      {},
-      {
-        searchInput: tagsSearchInput,
-        level,
-        contract,
-        location,
-        typejob,
-      }
-    );
-    // props.searchResult(result);
-
-    dispatch(setSearchResult(result));
-    navigate("/seeking-jobs/");
+    if (tagsSearchInput.length > 0) {
+      const result = Object.assign(
+        {},
+        {
+          searchInput: tagsSearchInput,
+          level,
+          contract,
+          location,
+          typejob,
+        }
+      );
+      dispatch(setSearchResult(result));
+      navigate("/seeking-jobs/");
+    } else {
+      toast.error("Chưa nhập nội dung tìm kiếm");
+    }
   };
 
   return (

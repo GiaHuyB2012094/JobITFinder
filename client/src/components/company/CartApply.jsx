@@ -7,16 +7,18 @@ import { SlEnvolopeLetter } from "react-icons/sl";
 import { MdEmail, MdDeleteForever } from "react-icons/md";
 import { Modal, Popconfirm, Popover, Tooltip } from "antd";
 import Swal from "sweetalert2";
+import { FaArrowRight } from "react-icons/fa6";
 import {
   useConformApplyMutation,
   useRejectApplyMutation,
 } from "../../slices/applyApiSlice";
 // import { Link } from "react-router-dom";
 import { URL_Server } from "../../api/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { convertDateFormat } from "../../constants/convertData";
 import FormSchedule from "./FormSchedule";
 import { useGetUserItemQuery } from "../../slices/usersApiSlice";
+import ConfirmDialog from "../Shared/ConfirmDiaglog/ConfirmDialog";
 
 const CartApply = ({
   name,
@@ -29,7 +31,14 @@ const CartApply = ({
   post,
   applyID,
   userID,
+  answerInterviewQuestion,
 }) => {
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+
+  const [isOpenIntro, setIsOpenIntro] = useState(false);
+
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+
   const [conformApply] = useConformApplyMutation({
     refetchOnMountOrArgChange: true,
   });
@@ -58,27 +67,36 @@ const CartApply = ({
     }
   };
 
-  const handleRejectApply = async () => {
-    try {
-      await rejectApply(applyID).unwrap();
-      Swal.fire({
-        title: "Từ chối",
-        text: "Từ chối đơn ứng tuyển thành công",
-        icon: "success",
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Từ chối",
-        text: "Từ chối đơn ứng tuyển thất bại",
-        icon: "error",
-      });
-    }
-  };
+  useEffect(() => {
+    const handleRejectApply = async () => {
+      if (deleteConfirm) {
+        setIsOpenDelete(false);
+        setDeleteConfirm(false);
+
+        try {
+          await rejectApply(applyID).unwrap();
+          Swal.fire({
+            title: "Từ chối",
+            text: "Từ chối đơn ứng tuyển thành công",
+            icon: "success",
+          });
+        } catch (error) {
+          Swal.fire({
+            title: "Từ chối",
+            text: "Từ chối đơn ứng tuyển thất bại",
+            icon: "error",
+          });
+        }
+      }
+    };
+    handleRejectApply();
+  }, [deleteConfirm]);
+
   return (
     <>
       <div
-        className="w-full p-5 bg-slate-50 rounded-md shadow-sm flex-center gap-2 border-2 border-solid border-indigo-100
-        hover:border-indigo-300
+        className="w-full p-5 bg-slate-50 rounded-md shadow-sm flex-center gap-2 border-2 border-solid border-orange-100
+        hover:border-orange-300
         "
       >
         <div className="w-2/12 flex-center">
@@ -104,7 +122,7 @@ const CartApply = ({
                   Đã xác nhận
                 </p>
               ) : status === "scheduled" ? (
-                <p className="bg-indigo-500 text-white px-2 py-1 mx-2  rounded-md">
+                <p className="bg-orange-500 text-white px-2 py-1 mx-2  rounded-md">
                   Đã lên lịch hẹn
                 </p>
               ) : status === "cancel" ? (
@@ -116,35 +134,42 @@ const CartApply = ({
               )}
             </div>
             <Popover
-              content={<p className="flex flex-col flex-wrap">mkasdkdakms</p>}
+              content={
+                <p className="flex flex-col flex-wrap ">
+                  Xem thông tin ứng viên
+                </p>
+              }
               // title="Title"
             >
-              <p className="px-2 py-1 rounded-md border-2 border-solid border-gray-400 hover:bg-black hover:text-white">
+              <p
+                className="px-2 py-1 cursor-pointer rounded-md border-2 border-solid border-gray-400 hover:bg-black hover:text-white"
+                onClick={() => setIsOpenIntro(true)}
+              >
                 <SlEnvolopeLetter />
               </p>
             </Popover>
           </div>
           <div className="">
-            <p className="text-indigo-500 overflow-hidden font-medium">
+            <p className="text-orange-500 overflow-hidden font-medium">
               {post?.name}
             </p>
           </div>
 
           <div className="flex gap-5 ">
             <div className="flex-center gap-2">
-              <p className=" font-medium text-indigo-600">
+              <p className=" font-medium ">
                 <FaPhoneAlt />
               </p>
               <p className="text-base">{phone}</p>
             </div>
             <div className="flex-center gap-2">
-              <p className="text-lg font-medium text-indigo-600">
+              <p className="text-lg font-medium ">
                 <MdEmail />
               </p>
               <p className="text-base">{email}</p>
             </div>
             <div className="flex-center gap-2">
-              <p className="text-base font-medium text-indigo-600">
+              <p className="text-base font-medium ">
                 <FaClock />
               </p>
               <p className="text-base">{convertDateFormat(timeApply)}</p>
@@ -155,8 +180,8 @@ const CartApply = ({
         <div className="w-2/12 flex flex-col gap-4 mx-1">
           <div className="flex flex-col items-end mb-6">
             <p
-              className="italic flex-center gap-2 text-indigo-500 px-2 py-1  border-b-2 border-solid border-indigo-300
-              hover:bg-indigo-500 hover:text-white hover:border-indigo-500 cursor-pointer "
+              className="italic flex-center gap-2 text-orange-500 px-2 py-1  border rounded-md border-orange-300 shadow-orange-400/40
+              hover:bg-orange-500 hover:text-white hover:border-orange-500 cursor-pointer "
               onClick={() => {
                 window.open(
                   `${URL_Server}/files/${cv.pdf}`,
@@ -195,7 +220,7 @@ const CartApply = ({
               <>
                 <Tooltip title="Tạo lịch hẹn">
                   <button
-                    className="p-2 text-sm bg-orange-200 rounded-md cursor-pointer active:translate-y-1 shadow-sm"
+                    className="p-2 text-sm border border-slate-300 rounded-md cursor-pointer active:translate-y-1 shadow-sm"
                     onClick={() => setOpenFormSchedule(true)}
                   >
                     <FaPlus />
@@ -204,7 +229,7 @@ const CartApply = ({
 
                 <Tooltip title="Xác nhận">
                   <butotn
-                    className="p-2 text-sm bg-orange-200 rounded-md cursor-pointer active:translate-y-1 shadow-sm"
+                    className="p-2 text-sm border border-slate-300 rounded-md cursor-pointer active:translate-y-1 shadow-sm"
                     onClick={handleConfirm}
                   >
                     <FaCheck />
@@ -214,25 +239,12 @@ const CartApply = ({
             )}
 
             <Tooltip title="Từ chối | xóa">
-              <Popconfirm
-                title="Hủy đơn ứng tuyển"
-                description="Có chắc chắn muốn hủy?"
-                cancelText="Hủy"
-                okText="Đồng ý"
-                icon={
-                  <MdDeleteForever
-                    style={{
-                      color: "red",
-                      fontSize: "23px",
-                    }}
-                  />
-                }
-                onConfirm={handleRejectApply}
+              <button
+                className="p-2 text-sm border border-slate-300 rounded-md cursor-pointer active:translate-y-1 shadow-sm"
+                onClick={() => setIsOpenDelete(true)}
               >
-                <button className="p-2 text-sm bg-orange-200 rounded-md cursor-pointer active:translate-y-1 shadow-sm">
-                  <IoMdClose />
-                </button>
-              </Popconfirm>
+                <IoMdClose />
+              </button>
             </Tooltip>
           </div>
         </div>
@@ -255,16 +267,60 @@ const CartApply = ({
         okType="primary"
         footer={null}
       >
-        {/* <FormApply
-          companyID={dataCompany?._id}
-          post={dataPost}
-          modalClose={(data) => setOpenFormApply(data)}
-        /> */}
         <FormSchedule
           modalClose={(data) => setOpenFormSchedule(data)}
           applyID={applyID}
         />
       </Modal>
+
+      <Modal
+        title={
+          <p className="text-lg pb-3 border-b-2 border-solid border-orange-200">
+            Thông tin ứng viên & câu trả lời phỏng vấn
+          </p>
+        }
+        centered
+        open={isOpenIntro}
+        // onOk={() => setOpenFormApply(false)}
+        onCancel={() => setIsOpenIntro(false)}
+        width={700}
+        okType="primary"
+        footer={null}
+      >
+        <div className="space-y-3">
+          <div className="">
+            <p className=" capitalize font-medium text-orange-500 text-base ">
+              Thư giới thiệu
+            </p>
+            <p className="ml-3">{intro}</p>
+          </div>
+          {answerInterviewQuestion && (
+            <div className="">
+              <p className=" capitalize font-medium text-orange-500 text-base ">
+                Trả lời câu hỏi phỏng vấn
+              </p>
+              {answerInterviewQuestion.map((question, idx) => (
+                <div key={idx} className="space-y-1 ml-3">
+                  <p className=" text-black">
+                    {idx + 1}. {question.name}
+                  </p>
+                  <p className="text-slate-500 text-sm pl-3 flex items-center gap-x-2">
+                    <FaArrowRight />
+                    {question.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </Modal>
+
+      {/* confirm delete */}
+      <ConfirmDialog
+        open={isOpenDelete}
+        setOpen={(data) => setIsOpenDelete(data)}
+        deleteConfirm={(data) => setDeleteConfirm(data)}
+      />
     </>
   );
 };

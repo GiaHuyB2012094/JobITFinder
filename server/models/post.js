@@ -96,6 +96,10 @@ const post = new Schema(
       type: [String],
       default: [],
     },
+    interviewQuestions: {
+      type: [],
+      default: [],
+    },
   },
   {
     timestamps: true,

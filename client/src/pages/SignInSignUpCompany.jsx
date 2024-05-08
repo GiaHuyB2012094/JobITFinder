@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Button, Image, InputControl, Nav } from "../components";
-import imgSignIn from "../assets/BG_IT.jpg";
-import imgSignUpCompany from "../assets/signupcompany.png";
-import { Select, Space, Tag } from "antd";
+import { Select, Tag } from "antd";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { getProvinces } from "../api/provincesApi";
@@ -10,7 +8,7 @@ import Wave from "react-wavify";
 import { useGetSkillsQuery } from "../slices/skillOfCompanyApiSlice";
 import { useGetIndustryQuery } from "../slices/industryOfCompanyApiSlice";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   useLoginMutation,
   useRegisterUMutation,
@@ -45,6 +43,7 @@ const Signin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
+
   const {
     register,
     handleSubmit,
@@ -56,6 +55,7 @@ const Signin = () => {
       password: "",
     },
   });
+
   const onSubmit = async (data) => {
     const { email, password } = data;
     try {
@@ -72,9 +72,12 @@ const Signin = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
+
   return (
-    <>
-      <p className="text-3xl font-bold text-indigo-500 uppercase">Đăng nhập</p>
+    <div className="">
+      <p className="text-3xl text-center font-bold text-indigo-500 uppercase">
+        Đăng nhập
+      </p>
       <p className="text-primary-black p-3 mb-2 border-b-2 border-dashed border-indigo-100">
         Liên kết tài khoản để sử dụng các dịch vụ của JobsITFinder
       </p>
@@ -112,20 +115,9 @@ const Signin = () => {
           onClick={handleSubmit(onSubmit)}
         />
       </div>
-      <div className="absolute bottom-0 w-full z-0">
-        <Wave
-          fill="#6366f1"
-          paused={false}
-          options={{
-            height: 75,
-            amplitude: 30,
-            speed: 0.2,
-            points: 5,
-          }}
-        />
-      </div>
+
       {isLoading && <Loader />}
-    </>
+    </div>
   );
 };
 const Signup = () => {
@@ -221,7 +213,7 @@ const Signup = () => {
           JobsITFinder
         </p>
         <div className="flex-center flex-col px-8 py-2 gap-3 min-w-[450px] ">
-          <form className="w-4/5 flex flex-col gap-3 z-10 bg-[rgba(240,240,240,0.4)] rounded-md px-10 py-8 backdrop-blur-sm">
+          <form className="w-4/5 flex flex-col gap-3 z-10 bg-white rounded-md px-10 py-8 shadow border">
             <p className="text-lg text-indigo-600 font-medium">
               Thông tin đăng nhập
             </p>
@@ -386,10 +378,21 @@ const SignInSignUpCompany = () => {
   return (
     <div className="w-full h-screen">
       <Nav />
-      <main className="flex-center w-full h-[695px]">
+      <main className="flex-center w-full h-full">
         {/* Left */}
-        <div className="relative w-[35%] bg-white h-[707px] flex-center flex-col shadow-md z-10">
+        <div className="relative  w-[35%] h-full flex-center flex-col shadow-md z-10 ">
           <Signin />
+          <Wave
+            fill="#6366f1"
+            paused={false}
+            options={{
+              height: 75,
+              amplitude: 30,
+              speed: 0.2,
+              points: 5,
+            }}
+            className="absolute bottom-0 w-full z-0 p-0 m-0"
+          />
         </div>
         {/* Right */}
         <div className="w-[65%] bg-indigo-300 gap-1 h-full flex flex-col overflow-y-scroll no-scrollbar">

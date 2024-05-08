@@ -134,6 +134,7 @@ const Search = (props) => {
   };
 
   useEffect(() => {
+    console.log(homeKeySearch);
     if (Object.keys(homeKeySearch).length > 0) {
       setContract(homeKeySearch?.contract);
       setTypeJob(homeKeySearch?.typejob);
@@ -178,7 +179,7 @@ const Search = (props) => {
           </h2>
         ) : (
           <div className="font-normal flex gap-x-2">
-            {homeKeySearch?.searchInput.map((skill, idx) => (
+            {homeKeySearch?.searchInput?.map((skill, idx) => (
               <h2
                 key={idx}
                 className="p-3 bg-indigo-500 text-white !text-lg capitalize"
@@ -532,7 +533,7 @@ const Container = (props) => {
       </div>
     );
   };
-
+  console.log(dataJobFiltered);
   return (
     <div className="min-h-screen bg-[#F0F2F5] drop-shadow px-48 py-4 flex gap-5 ">
       {/* left */}
@@ -543,11 +544,11 @@ const Container = (props) => {
         {/* card jobs */}
         <div className="space-y-5">
           {isLoadingDataJobPost ? (
-            Array.from({ length: 4 }).map((item, idx) => (
+            Array.from({ length: 4 }).map((_, idx) => (
               <CardHorizontalSkeleton key={idx} />
             ))
           ) : dataJobFiltered?.length > 0 ? (
-            dataJobFiltered?.slice(0, lengthDataJobsPost)?.map((data, idx) => (
+            dataJobFiltered.slice(0, lengthDataJobsPost).map((data, idx) => (
               <div key={idx}>
                 <CartJobPost post={data} />
               </div>

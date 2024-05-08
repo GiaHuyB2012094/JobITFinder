@@ -25,6 +25,7 @@ import {
   convertCurrency,
   convertCurrencyVND,
   convertVNDToUSD,
+  currencyFormat,
 } from "../constants/convertData";
 import CurrencyInput from "react-currency-input-field";
 // import { IoCaretDownOutline } from "react-icons/io5";
@@ -473,6 +474,7 @@ const ContentTextRegion = () => {
 
 const FormCalculate = () => {
   const [isActive, setIsActive] = useState(true); // true = Gross --> Net, fasle = Net --> Gross
+  const [isVND, setIsVND] = useState(true); // true = Gross --> Net, fasle = Net --> Gross
   const [isModalRegionDescOpen, setIsModalRegionDescOpen] = useState(false);
   const [isModalCalculateOpen, setIsModalCalculateOpen] = useState(false);
 
@@ -988,24 +990,24 @@ const FormCalculate = () => {
           <div className="w-1/6 flex-center gap-2 p-1 mt-7 rounded-md border border-solid border-gray-400">
             <button
               className={`w-full p-[2px] rounded-md  ${
-                isActive
+                isVND
                   ? "bg-indigo-200 border-2 border-solid border-indigo-300"
                   : "hover:bg-indigo-100"
               }
                                 `}
-              onClick={() => setIsActive(true)}
+              onClick={() => setIsVND(true)}
             >
               VND
             </button>
 
             <button
               className={`w-full p-[2px] rounded-md  ${
-                !isActive
+                !isVND
                   ? "bg-indigo-200 border-2 border-solid border-indigo-300"
                   : "hover:bg-indigo-100"
               }
                                 `}
-              onClick={() => setIsActive(false)}
+              onClick={() => setIsVND(false)}
             >
               USD
             </button>
@@ -1189,10 +1191,12 @@ const FormCalculate = () => {
               </>
             )}
             <p className="text-xl font-bold text-red-500">
-              {convertCurrencyVND(Number(salary))}{" "}
+              {salary ? convertCurrencyVND(Number(salary)) : 0}
             </p>
 
-            <p className="text-gray-500">{convertVNDToUSD(salary)} USD</p>
+            <p className="text-gray-500">
+              {salary ? convertVNDToUSD(salary) : 0} USD
+            </p>
           </div>
 
           <div className="w-[5%] flex-center">
@@ -1208,15 +1212,21 @@ const FormCalculate = () => {
                 <p className="font-bold uppercase">net</p>
 
                 <p className="text-xl font-bold text-red-500">
-                  {convertCurrencyVND(
-                    earningBeforeFax - calculateEarningPersonalGross(earningFax)
-                  )}
+                  {salary
+                    ? convertCurrencyVND(
+                        earningBeforeFax -
+                          calculateEarningPersonalGross(earningFax)
+                      )
+                    : 0}
                 </p>
 
                 <p className="text-gray-500">
-                  {convertVNDToUSD(
-                    earningBeforeFax - calculateEarningPersonalGross(earningFax)
-                  )}{" "}
+                  {salary
+                    ? convertVNDToUSD(
+                        earningBeforeFax -
+                          calculateEarningPersonalGross(earningFax)
+                      )
+                    : 0}{" "}
                   USD
                 </p>
               </>
@@ -1225,11 +1235,22 @@ const FormCalculate = () => {
                 <p className="font-bold uppercase">gross</p>
 
                 <p className="text-xl font-bold text-red-500">
-                  {convertCurrencyVND(resultNetToGross)}
+                  {salary
+                    ? resultNetToGross > 0
+                      ? convertCurrencyVND(resultNetToGross)
+                      : "0 VND"
+                    : "0 VND"}{" "}
+                  {console.log(resultNetToGross)}
+                  {console.log(convertCurrencyVND(resultNetToGross))}
                 </p>
 
                 <p className="text-gray-500">
-                  {convertVNDToUSD(resultNetToGross)} USD
+                  {salary
+                    ? convertVNDToUSD(resultNetToGross) > 0
+                      ? convertVNDToUSD(resultNetToGross)
+                      : 0
+                    : 0}{" "}
+                  USD
                 </p>
               </>
             )}
@@ -1309,15 +1330,21 @@ const GrossNet = () => {
                 <div className="flex-between w-full py-3 px-4 bg-indigo-50 rounded-md border-2 border-dashed border-indigo-200">
                   <div className="flex flex-col gap-2">
                     <p>Lương cơ sở:</p>
-                    <p className="text-indigo-600">11,000,000đ</p>
+                    <p className="text-indigo-600">
+                      {currencyFormat(basicWage)}
+                    </p>
                   </div>
                   <div className="flex flex-col gap-2">
                     <p>Giảm trừ gia cảnh bản thân:</p>
-                    <p className="text-indigo-600">11,000,000đ</p>
+                    <p className="text-indigo-600">
+                      {currencyFormat(personalFamilyReduceWage)}
+                    </p>
                   </div>
                   <div className="flex flex-col gap-2">
                     <p>Người phụ thuộc:</p>
-                    <p className="text-indigo-600">11,000,000đ</p>
+                    <p className="text-indigo-600">
+                      {currencyFormat(dependentWage)}
+                    </p>
                   </div>
                 </div>
               </div>

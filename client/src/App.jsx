@@ -17,6 +17,7 @@ import {
   SavePost,
   GrossNet,
   CompanyTop,
+  InterviewQuestion,
 } from "./pages";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,6 +32,7 @@ import TopCompaniesDetail from "./pages/TopCompaniesDetail";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SeekingJobs from "./pages/SeekingJobs";
+import ApplyQuestionForJob from "./pages/ApplyQuestionForJob";
 
 function LayoutCompany() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -118,6 +120,11 @@ function App() {
           <Route path="/companies" element={<Company />} />
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/my-jobs" element={<MyJobs />} />
+          <Route path="/interview-question" element={<InterviewQuestion />} />
+          <Route
+            path="/apply-question-for-job"
+            element={<ApplyQuestionForJob />}
+          />
           <Route path="/schedule-company" element={<ScheduleCompany />} />
         </Route>
       </Routes>

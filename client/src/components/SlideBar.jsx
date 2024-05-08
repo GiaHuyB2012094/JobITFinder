@@ -15,7 +15,8 @@ import { FaUsers } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-
+import { IoDocumentText } from "react-icons/io5";
+import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 const SlideBar = memo(() => {
   const arrIcons = [
     <ImProfile key={1} />,
@@ -23,7 +24,9 @@ const SlideBar = memo(() => {
     <MdUpload key={3} />,
     <FaListAlt key={4} />,
     <FaUsers key={5} />,
-    <IoLogOutSharp key={6} />,
+    <IoDocumentText key={6} />,
+    <HiOutlineClipboardDocumentList key={7} />,
+    <IoLogOutSharp key={8} />,
   ];
   const { userInfo } = useSelector((state) => state.auth);
   const location = useLocation();
@@ -43,7 +46,7 @@ const SlideBar = memo(() => {
     }
   };
   return (
-    <main className="h-full my-0 py-3 px-3 bg-white w-1/5  border-r border-solid border-gray-100">
+    <main className="h-full my-0 py-3  px-3 bg-white w-1/5  border-r border-solid border-gray-100">
       <div className="w-full flex items-center justify-between gap-3 border-b-2 border-solid border-gray-200 pb-4">
         <div className="">
           <Image

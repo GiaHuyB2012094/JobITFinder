@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { IoCloudUpload } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { useCreateApplyMutation } from "../slices/applyApiSlice";
 import axios from "axios";
@@ -18,6 +18,9 @@ const FormApply = ({ companyID, post, modalClose, appliedSuccess }) => {
   const [intro, setIntro] = useState("");
   const [createApply] = useCreateApplyMutation();
   const [file, setFile] = useState("");
+  const [answerInterviewQuestion, setAnswerInterviewQuestion] = useState(
+    post?.interviewQuestions.map((question) => ({ name: question, answer: "" }))
+  );
 
   const inputFileRef = useRef(null);
   const {
@@ -35,6 +38,15 @@ const FormApply = ({ companyID, post, modalClose, appliedSuccess }) => {
   const handleClickUploadFile = () => {
     inputFileRef.current.click();
   };
+
+  const handleOnChangeQuestions = (e, idx) => {
+    e.preventDefault();
+
+    const valOnChangeQuestions = [...answerInterviewQuestion];
+    valOnChangeQuestions[idx].answer = e.target.value;
+    setAnswerInterviewQuestion(valOnChangeQuestions);
+  };
+
   const onSubmit = async (data) => {
     // ---------------------------------------------------
     try {
@@ -58,7 +70,9 @@ const FormApply = ({ companyID, post, modalClose, appliedSuccess }) => {
         post: post,
         userID: userInfo?._id,
         status: "await",
+        answerInterviewQuestion,
       });
+      console.log(data);
       await createApply(data).unwrap();
       await Swal.fire({
         title: "Ứng tuyển công việc",
@@ -78,8 +92,11 @@ const FormApply = ({ companyID, post, modalClose, appliedSuccess }) => {
 
   return (
     <div>
-      <main className="w-full flex justify-center gap-3">
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <main className="w-full h-[550px] flex justify-center gap-3">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="h-full overflow-y-scroll overflow-x-hidden pr-2"
+        >
           <div className="my-2 w-full flex flex-col gap-2">
             <div className="flex items-center gap-3 w-full">
               <p className="font-medium text-indigo-400">
@@ -110,16 +127,7 @@ const FormApply = ({ companyID, post, modalClose, appliedSuccess }) => {
                   onChange={(e) => setFile(e.target.files[0])}
                 />
                 {file && (
-                  <p
-                    className="py-1 px-2 bg-slate-200 mb-2 cursor-pointer"
-                    // onClick={() => {
-                    //   window.open(
-                    //     file.lastModified + file.name,
-                    //     "_blank",
-                    //     "noreferrer"
-                    //   );
-                    // }}
-                  >
+                  <p className="py-1 px-2 bg-slate-200 mb-2 cursor-pointer">
                     {file?.name}
                   </p>
                 )}
@@ -186,6 +194,30 @@ const FormApply = ({ companyID, post, modalClose, appliedSuccess }) => {
                 className="rounded-md border-2 border-solid border-gray-400 px-3 py-2 mt-2 mx-2 outline-none"
               ></textarea>
             </div>
+
+            {/* answer */}
+            {post?.interviewQuestions.length > 0 && (
+              <div className="mt-3 py-3 border-t border-slate-400">
+                <p className="text-gray-700 font-medium pl-2 capitalize text-indigo-500 text-lg">
+                  Các câu hỏi thêm
+                </p>
+                {answerInterviewQuestion.map((question, idx) => (
+                  <div key={idx} className="w-96">
+                    <InputControl
+                      type="text"
+                      label={question.name}
+                      value={question.answer}
+                      onChange={(e) => handleOnChangeQuestions(e, idx)}
+                      force
+                      styles="w-96"
+                      // {...register("name", {
+                      //   required: "Vui lòng nhập đầy đủ tên của bạn (^_^)",
+                      // })}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </form>
         <div className="w-1/2 flex-center flex-col">

@@ -101,7 +101,9 @@ const CardCompaniesList = ({ listId }) => {
 
 const AppliesUser = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const { data: dataApply } = useGetAppliesUserIDQuery(userInfo?._id);
+  const { data: dataApply } = useGetAppliesUserIDQuery(userInfo?._id, {
+    refetchOnMountOrArgChange: true,
+  });
   const dataItemsDesc = function (dataI) {
     const result = [
       {

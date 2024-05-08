@@ -73,7 +73,7 @@ export const salaryScale = (minSalary, maxSalary) => {
   } else if (minSalary >= 35500000 && maxSalary <= 40000000) {
     result = "Tới 40 triệu";
   } else if (minSalary >= 50000000 && maxSalary <= 55000000) {
-    result = "Tới 5s0 triệu";
+    result = "Tới 50 triệu";
   } else if (minSalary >= 60000000 && maxSalary <= 65000000) {
     result = "Tới 60 triệu";
   } else {

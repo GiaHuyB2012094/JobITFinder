@@ -1,28 +1,31 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const CardBot = ({ id, imgI, name, address }) => {
-    const navigation = useNavigate()
+  const navigation = useNavigate();
 
-    const handleOnClick = (id, name) => {
-        navigation(`/company-item/${id}/${name}`)
-    }
+  const handleOnClick = (id, name) => {
+    navigation(`/company-item/${id}/${name}`);
+  };
   return (
-    <div className='w-full rounded border p-3 shadow min-h-16 my-auto hover:bg-indigo-50 cursor-pointer'
-        onClick={() => handleOnClick(id, name)}
+    <div
+      className="w-full flex items-center rounded border border-slate-400 p-1 shadow min-h-16 hover:bg-indigo-50 cursor-pointer"
+      onClick={() => handleOnClick(id, name)}
     >
-        <div className='flex gap-2 items-center'>
-            <div className='w-1/4'>
-                <img src={imgI} alt={`${imgI}-k`} className='w-12'/>
-            </div>
-            <div className='w-3/4'>
-                <p className='text-sm text-indigo-500 font-medium line-clamp-1'>{name}</p>
-                <p className='text-sm text-gray-600 line-clamp-1'>{address}</p>
-
-                {}
-            </div>
+      <div className="flex gap-2 items-center">
+        <div className="w-1/4">
+          <img src={imgI} alt={`${imgI}-k`} className="w-12" />
         </div>
-    </div>
-  )
-}
+        <div className="w-3/4">
+          <p className="text-sm text-indigo-500 font-medium line-clamp-1">
+            {name}
+          </p>
+          <p className="text-sm text-gray-600 line-clamp-1">{address}</p>
 
-export default CardBot
+          {}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CardBot;

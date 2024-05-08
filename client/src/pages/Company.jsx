@@ -4,7 +4,6 @@ import { FaRegCalendarCheck } from "react-icons/fa6";
 import { FaBell } from "react-icons/fa";
 import { Calendar, Popover } from "antd";
 import { useSelector } from "react-redux";
-
 // chart
 // import { BarChart } from "recharts";
 
@@ -21,14 +20,24 @@ import {
   PostCompany,
   QuantityTable,
 } from "../components/DashboardCompany";
+import { useGetAppliesCompanyIDQuery } from "../slices/applyApiSlice";
 
 const Company = () => {
   var now = dayjs();
+  const { userInfo } = useSelector((state) => state.auth);
 
+  const { data: dataPost } = useGetPostItemWithCompanyQuery(userInfo._id, {
+    refetchOnMountOrArgChange: true,
+  });
+
+  const { data: dataApply } = useGetAppliesCompanyIDQuery(userInfo._id, {
+    refetchOnMountOrArgChange: true,
+  });
+  console.log(dataApply?.length);
   return (
     <main className="max-h-screen">
       <Nav />
-      <div className="pt-16 w-full max-h-screen flex ">
+      <div className="pt-16 w-full max-h-screen flex">
         <SlideBar />
         {/* body  */}
         <div className="space-y-3 w-4/5 px-10 pt-2 pb-8 bg-slate-100 overflow-y-scroll no-scrollbar">
@@ -54,14 +63,21 @@ const Company = () => {
 
           <div className="flex gap-4">
             <div className="space-y-3 w-3/4">
-              <NotificationDashboard />
+              <NotificationDashboard applyQuantity={dataApply?.length} />
               <ChartStatistic />
               <InterviewProcess />
               <PostCompany />
             </div>
             <div className="space-y-3 w-1/4">
               <Calendar fullscreen={false} />
-              <QuantityTable />
+              <QuantityTable
+                applyQuantity={dataApply?.length}
+                postQuantity={dataPost?.length}
+                scheduledApplyQuantity={
+                  dataApply?.filter((apply) => apply.status === "scheduled")
+                    ?.length
+                }
+              />
             </div>
           </div>
         </div>

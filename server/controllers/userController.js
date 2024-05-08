@@ -3,6 +3,9 @@ import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 // Auth user get/set token
 // route POST /api/users/auth
+
+import { v4 as uuidv4 } from "uuid";
+
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -43,11 +46,12 @@ const authUser = asyncHandler(async (req, res) => {
         benefits: user.benefits,
         addressDetail: user.addressDetail,
         imagesCompany: user.imagesCompany,
+        setOfQuestions: user.setOfQuestions,
       });
     }
   } else {
     res.status(401);
-    throw new Error("Invalid email or password");
+    throw new Error("Email hoặc mật khẩu không hợp lệ");
   }
 });
 
@@ -70,7 +74,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const userExists = await User.findOne({ email });
     if (userExists) {
       res.status(400);
-      throw new Error("Company already exists");
+      throw new Error("Tài khoản công ty đã tồn tại");
     }
     const user = await User.create({
       position,
@@ -95,17 +99,38 @@ const registerUser = asyncHandler(async (req, res) => {
       });
     } else {
       res.status(400);
-      throw new Error("Invalid company data");
+      throw new Error("Thông tin công ty không hợp lệ");
     }
   }
   // user---------------------------
   else if (position === "user") {
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
     const { firstName, lastName, password, email, position } = req.body;
     const userExists = await User.findOne({ email });
 
     if (userExists) {
       res.status(400);
-      throw new Error("User already exists");
+      throw new Error("Tài khoản người dùng đẵ tồn tại");
+    }
+
+    if (!email) {
+      res.status(400);
+      throw new Error("Email không được bỏ trống");
+    } else {
+      let validEmail = emailRegex.test(email);
+      let parts = email.split("@");
+      let domainParts = parts[1].split(".");
+
+      let checkEmailFormat = domainParts.some(function (part) {
+        return part.length > 63;
+      });
+
+      if (!validEmail || checkEmailFormat || parts[0].length > 64) {
+        res.status(400);
+        throw new Error("Email không đúng định dạng");
+      }
     }
 
     const user = await User.create({
@@ -269,6 +294,71 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not found");
   }
+  // route PUT /api/users/proflie
+
+  //route POST /api/users/add-questions-company/
+});
+
+const addQuestionsCompany = asyncHandler(async (req, res) => {
+  try {
+    const userExit = await User.findById(req.params.id);
+
+    let questionsObs = Object.assign(
+      {},
+      {
+        id: uuidv4(),
+        name: req.body.name,
+        questions: req.body.questions,
+        date: req.body.date,
+      }
+    );
+
+    userExit.setOfQuestions.push(questionsObs);
+    userExit.save();
+
+    return res.status(200).json(userExit);
+  } catch (error) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+});
+
+const updateQuestionsCompany = asyncHandler(async (req, res) => {
+  try {
+    const userExit = await User.findById(req.params.id);
+
+    for (let i = 0; i < userExit.setOfQuestions.length; i++) {
+      if (userExit.setOfQuestions[i].id === req.body.id) {
+        userExit.setOfQuestions[i] = req.body;
+      }
+    }
+
+    userExit.save();
+
+    return res.status(200).json(userExit);
+  } catch (error) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+});
+
+const deleteQuestionsCompany = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.body, req.params.id);
+    const userExit = await User.findById(req.params.id);
+
+    userExit.setOfQuestions = userExit.setOfQuestions.filter(
+      (question) => question.id !== req.body.id
+    );
+
+    userExit.save();
+
+    // console.log(userExit.setOfQuestions);
+    return res.status(200).json(userExit);
+  } catch (error) {
+    res.status(401);
+    throw new Error("User not found");
+  }
 });
 export {
   authUser,
@@ -279,4 +369,7 @@ export {
   getAllCompany,
   getCompanyItem,
   getUserItem,
+  addQuestionsCompany,
+  updateQuestionsCompany,
+  deleteQuestionsCompany,
 };

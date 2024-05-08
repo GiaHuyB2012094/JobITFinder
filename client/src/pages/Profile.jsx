@@ -334,7 +334,7 @@ const Profile = () => {
           <Image
             src={previewCoverImage ? previewCoverImage : coverAvatarCurrent}
             alt="cart image"
-            className="h-full w-full mx-auto pt-12 "
+            className="h-full  mx-auto pt-12 "
           />
         </div>
 
