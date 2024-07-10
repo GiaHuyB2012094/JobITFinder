@@ -15,12 +15,12 @@
 #### Login User
 
 - User need register and login successfully to access application
-  ![login-user](./JobITFinder/assets/Screenshot%202024-07-10%20102944.png)
+  ![login-user](./assets/Screenshot%202024-07-10%20102944.png)
 
 #### Login Company
 
 - Company need register and login successfully to access application
-  ![login-company](./JobITFinder/assets/Screenshot%202024-07-10%20102944.png)
+  ![login-company](/assets/Screenshot%202024-07-10%20102944.png)
 
 #### Search for the fit job
 
