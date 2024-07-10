@@ -12,17 +12,17 @@
 ### Login & Signup
 #### Login User
 
-**User need register and login successfully to access application**
+- **User need register and login successfully to access application**
   ![login-user](./assets/Screenshot%202024-07-10%20102944.png)
 
 #### Login Company
 
-**Company need register and login successfully to access application**
+- **Company need register and login successfully to access application**
   ![login-company](/assets/Screenshot%202024-07-10%20102944.png)
 
 #### Search for the fit job
 
-**User after logined successfully will be search for the fit job on search bar**
+- **User after logined successfully will be search for the fit job on search bar**
   ![search-job](./assets/search_bar.png)
   ![search-job-with-availible-options](./assets/search_s.png)
 
@@ -54,9 +54,9 @@
 ![view-all-job-post](./assets/create_schedule_interview_admin.png)
 
 #### Create set of questions interview
-**Create set of questions interview**
+- **Create set of questions interview**
 ![view-all-job-post](./assets/create_set_of_questions_interview.png)
-**Edit set of question interview**
+- **Edit set of question interview**
 ![view-all-job-post](./assets/edit_interview.png)
 
 #### Admin Dashboard
@@ -82,9 +82,9 @@
 ![view-all-job-post](./assets/profolio.png)
 
 #### User save posts
-**User save post to see later**
+- **User save post to see later**
 ![view-all-job-post](./assets/save_post.png)
-**View all saved posts**
+- **View all saved posts**
 ![view-all-job-post](./assets/view_all_posts_save.png)
 
 #### Search for companies
