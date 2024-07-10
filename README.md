@@ -10,7 +10,7 @@
 
 ## User Interface
 
-### Login Signup
+### Login & Signup
 
 #### Login User
 
@@ -25,119 +25,119 @@
 #### Search for the fit job
 
 - User after logined successfully will be search for the fit job on search bar
-  ![search-job](./JobITFinder/assets/search_bar.png)
-  ![search-job-with-availible-options](./JobITFinder/assets/search_s.png)
+  ![search-job](./assets/search_bar.png)
+  ![search-job-with-availible-options](./assets/search_s.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_all_posts.png)
+![view-all-job-post](./assets/view_all_posts.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/add_question_interview_1_admin.png)
-![view-all-job-post](./JobITFinder/assets/add_question_interview_2_admin.png)
-![view-all-job-post](./JobITFinder/assets/add_question_interview_3_admin.png)
+![view-all-job-post](./assets/add_question_interview_1_admin.png)
+![view-all-job-post](./assets/add_question_interview_2_admin.png)
+![view-all-job-post](./assets/add_question_interview_3_admin.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/apply_continue_job.png)
+![view-all-job-post](./assets/apply_continue_job.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/chatbot.png)
+![view-all-job-post](./assets/chatbot.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/create_resume.png)
+![view-all-job-post](./assets/create_resume.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/create_schudele_interview_admin.png)
+![view-all-job-post](./assets/create_schudele_interview_admin.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/create_set_of_questions_interview.png)
+![view-all-job-post](./assets/create_set_of_questions_interview.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/dashboard.png)
+![view-all-job-post](./assets/dashboard.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/edit_interview.png)
+![view-all-job-post](./assets/edit_interview.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/gross-net.png)
+![view-all-job-post](./assets/gross-net.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/invitation_interview.png)
+![view-all-job-post](./assets/invitation_interview.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/manage_applyed_admin.png)
+![view-all-job-post](./assets/manage_applyed_admin.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/manage_schedule_interview_admin.png)
+![view-all-job-post](./assets/manage_schedule_interview_admin.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/post_job.png)
+![view-all-job-post](./assets/post_job.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/print_resume.png)
+![view-all-job-post](./assets/print_resume.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/profolio.png)
+![view-all-job-post](./assets/profolio.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/save_post.png)
+![view-all-job-post](./assets/save_post.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/search_companies.png)
+![view-all-job-post](./assets/search_companies.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_all_applyed.png)
+![view-all-job-post](./assets/view_all_applyed.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_all_appyed_detail.png)
+![view-all-job-post](./assets/view_all_appyed_detail.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_all_post_detail_admin.png)
+![view-all-job-post](./assets/view_all_post_detail_admin.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_all_posts_in_rooms_type.png)
+![view-all-job-post](./assets/view_all_posts_in_rooms_type.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_all_posts_save.png)
+![view-all-job-post](./assets/view_all_posts_save.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_all_posts.png)
+![view-all-job-post](./assets/view_all_posts.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_all_rooms_type.png)
+![view-all-job-post](./assets/view_all_rooms_type.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_company_detail.png)
+![view-all-job-post](./assets/view_company_detail.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_post_detail.png)
+![view-all-job-post](./assets/view_post_detail.png)
 
 #### View All Job Posts
 
-![view-all-job-post](./JobITFinder/assets/view_table_gross-net_detail.png)
+![view-all-job-post](./assets/view_table_gross-net_detail.png)
