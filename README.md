@@ -24,7 +24,7 @@
 
 - **User after logined successfully will be search for the fit job on search bar**
   ![search-job](./assets/search_bar.png)
-  ![search-job-with-availible-options](./assets/search_s.png)
+  ![search-job-with-availible-options](./assets/search-s.png)
 
 #### View All Job Posts
 ![view-all-job-post](./assets/view_all_posts.png)
